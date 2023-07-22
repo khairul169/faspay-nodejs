@@ -1,0 +1,29 @@
+{
+  "name": "faspay",
+  "version": "1.0.0",
+  "description": "Unofficial Faspay.co.id Node.js API wrapper",
+  "main": "dist/index.js",
+  "scripts": {
+    "test": "mocha -r ts-node/register -r dotenv/config \"tests/**/*.test.ts\"",
+    "build": "tsc"
+  },
+  "keywords": ["faspay", "faspay.co.id", "fastpay nodejs"],
+  "author": "Khairul Hidayat",
+  "license": "MIT",
+  "dependencies": {
+    "dayjs": "^1.11.9",
+    "node-fetch": "^2.6"
+  },
+  "devDependencies": {
+    "@types/chai": "^4.3.5",
+    "@types/express": "^4.17.17",
+    "@types/mocha": "^10.0.1",
+    "@types/node": "^20.4.2",
+    "@types/node-fetch": "^2.6.4",
+    "chai": "^4.3.7",
+    "dotenv": "^16.3.1",
+    "mocha": "^10.2.0",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.1.6"
+  }
+}
