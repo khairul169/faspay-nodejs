@@ -10,6 +10,10 @@
   "keywords": ["faspay", "faspay.co.id", "fastpay nodejs"],
   "author": "Khairul Hidayat",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/khairul169/faspay-nodejs"
+  },
   "dependencies": {
     "dayjs": "^1.11.9",
     "node-fetch": "^2.6"

@@ -1,4 +1,4 @@
-<img src="assets/faspay-logo.webp?raw=true" height="100" />
+<img src="https://github.com/khairul169/faspay-nodejs/blob/main/assets/faspay-logo.webp?raw=true" height="100" />
 
 # [Faspay](https://faspay.co.id/id/) Unofficial Node.js API
 
@@ -126,6 +126,16 @@ const main = async () => {
 
 main();
 ```
+
+## Features
+
+- [x] Get Payment Channel
+- [x] Create Debit Transaction
+- [ ] Create Credit Transaction
+- [x] Cancel Transaction
+- [x] Check Transaction Status
+
+If the desired feature is not listed, kindly raise a new issue for it.
 
 ## License
 
