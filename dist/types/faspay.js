@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.PaymentStatusCode = exports.PaymentPlan = exports.ResponseCode = void 0;
+exports.ResponseCode = void 0;
 var ResponseCode;
 (function (ResponseCode) {
     ResponseCode["Success"] = "00";
@@ -25,18 +25,3 @@ var ResponseCode;
     ResponseCode["InsufficientParameters"] = "85";
     ResponseCode["SystemMalfunction"] = "96";
 })(ResponseCode || (exports.ResponseCode = ResponseCode = {}));
-var PaymentPlan;
-(function (PaymentPlan) {
-    PaymentPlan["FullSettlement"] = "1";
-    PaymentPlan["Installement"] = "2";
-})(PaymentPlan || (exports.PaymentPlan = PaymentPlan = {}));
-var PaymentStatusCode;
-(function (PaymentStatusCode) {
-    PaymentStatusCode["Unprocessed"] = "0";
-    PaymentStatusCode["InProcess"] = "1";
-    PaymentStatusCode["Success"] = "2";
-    PaymentStatusCode["Reserval"] = "4";
-    PaymentStatusCode["NotFound"] = "5";
-    PaymentStatusCode["Cancelled"] = "8";
-    PaymentStatusCode["Unknown"] = "9";
-})(PaymentStatusCode || (exports.PaymentStatusCode = PaymentStatusCode = {}));

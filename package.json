@@ -3,9 +3,13 @@
   "version": "1.0.1",
   "description": "Unofficial Faspay.co.id Node.js API wrapper",
   "main": "dist/index.js",
+  "files": [
+    "dist",
+    "README.md"
+  ],
   "scripts": {
     "test": "mocha -r ts-node/register -r dotenv/config \"tests/**/*.test.ts\"",
-    "build": "tsc"
+    "build": "rm -rf dist && tsc"
   },
   "keywords": ["faspay", "faspay.co.id", "fastpay nodejs"],
   "author": "Khairul Hidayat",

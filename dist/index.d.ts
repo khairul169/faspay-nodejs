@@ -1,4 +1,6 @@
-import Faspay from "./src/faspay";
+import FaspayDebit from "./src/debit";
+import FaspayError from "./src/error";
 export * from "./types/faspay";
-export { Faspay };
-export default Faspay;
+export * from "./types/debit";
+export { FaspayDebit, FaspayError };
+export default FaspayDebit;

@@ -17,8 +17,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Faspay = void 0;
-var faspay_1 = __importDefault(require("./src/faspay"));
-exports.Faspay = faspay_1.default;
+exports.FaspayError = exports.FaspayDebit = void 0;
+var debit_1 = __importDefault(require("./src/debit"));
+exports.FaspayDebit = debit_1.default;
+var error_1 = __importDefault(require("./src/error"));
+exports.FaspayError = error_1.default;
 __exportStar(require("./types/faspay"), exports);
-exports.default = faspay_1.default;
+__exportStar(require("./types/debit"), exports);
+exports.default = debit_1.default;

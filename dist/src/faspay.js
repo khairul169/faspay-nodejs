@@ -40,116 +40,19 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var node_fetch_1 = __importDefault(require("node-fetch"));
-var dayjs_1 = __importDefault(require("dayjs"));
 var faspay_1 = require("../types/faspay");
-var utils_1 = require("./utils");
-var endpoints = {
-    GET_PAYMENT_CHANNEL: "/cvr/100001/10",
-    POST_DATA_TRANSACTION: "/cvr/300011/10",
-    INQUIRY_PAYMENT_STATUS: "/cvr/100004/10",
-    CANCEL_TRANSACTION: "/cvr/100005/10",
-};
+var error_1 = __importDefault(require("./error"));
 var Faspay = /** @class */ (function () {
-    function Faspay(config) {
-        this.config = config;
+    function Faspay() {
+        this.baseUrl = "";
     }
-    Faspay.prototype.getPaymentChannel = function () {
-        return __awaiter(this, void 0, void 0, function () {
-            var signature, payload;
-            return __generator(this, function (_a) {
-                signature = (0, utils_1.generateSignature)(this.config.userId, this.config.password);
-                payload = {
-                    request: "Request List of Payment Gateway",
-                    merchant_id: this.config.merchantId,
-                    signature: signature,
-                };
-                return [2 /*return*/, this._request(endpoints.GET_PAYMENT_CHANNEL, payload)];
-            });
-        });
-    };
-    Faspay.prototype.createTransaction = function (data) {
-        return __awaiter(this, void 0, void 0, function () {
-            var billTotal, signature, payload;
-            var _this = this;
-            return __generator(this, function (_a) {
-                billTotal = data.total || data.items.reduce(function (a, b) { return a + b.price * b.qty; }, 0);
-                signature = (0, utils_1.generateSignature)(this.config.userId, this.config.password, data.billNo);
-                payload = {
-                    request: "Request List of Payment Gateway",
-                    merchant_id: this.config.merchantId,
-                    signature: signature,
-                    bill_no: data.billNo,
-                    bill_date: (0, dayjs_1.default)(data.date).format("YYYY-MM-DD HH:mm:ss"),
-                    bill_expired: (0, dayjs_1.default)(data.date)
-                        .add(data.expired || 24, "hours")
-                        .format("YYYY-MM-DD HH:mm:ss"),
-                    bill_desc: data.description,
-                    bill_currency: "IDR",
-                    bill_gross: data.gross ? (0, utils_1.idr)(data.gross) : undefined,
-                    bill_miscfee: data.miscFee ? (0, utils_1.idr)(data.miscFee) : undefined,
-                    bill_total: (0, utils_1.idr)(billTotal),
-                    payment_channel: data.paymentChannel,
-                    pay_type: "1",
-                    cust_no: data.custId,
-                    cust_name: data.custName,
-                    msisdn: data.custPhone,
-                    email: data.custEmail,
-                    terminal: "10",
-                    item: data.items.map(function (item) { return ({
-                        id: item.id,
-                        product: item.product,
-                        amount: (0, utils_1.idr)(item.price),
-                        qty: item.qty.toString(),
-                        payment_plan: faspay_1.PaymentPlan.FullSettlement,
-                        merchant_id: _this.config.merchantId,
-                    }); }),
-                };
-                return [2 /*return*/, this._request(endpoints.POST_DATA_TRANSACTION, payload)];
-            });
-        });
-    };
-    Faspay.prototype.getPaymentStatus = function (trxId, billNo) {
-        return __awaiter(this, void 0, void 0, function () {
-            var signature, payload;
-            return __generator(this, function (_a) {
-                signature = (0, utils_1.generateSignature)(this.config.userId, this.config.password, billNo);
-                payload = {
-                    request: "Inquiry Payment Status",
-                    merchant_id: this.config.merchantId,
-                    trx_id: trxId,
-                    bill_no: billNo,
-                    signature: signature,
-                };
-                return [2 /*return*/, this._request(endpoints.INQUIRY_PAYMENT_STATUS, payload)];
-            });
-        });
-    };
-    Faspay.prototype.cancelTransaction = function (trxId, billNo, reason) {
-        return __awaiter(this, void 0, void 0, function () {
-            var signature, payload;
-            return __generator(this, function (_a) {
-                signature = (0, utils_1.generateSignature)(this.config.userId, this.config.password, billNo);
-                payload = {
-                    request: "Canceling Payment",
-                    merchant_id: this.config.merchantId,
-                    merchant: this.config.merchant,
-                    trx_id: trxId,
-                    bill_no: billNo,
-                    payment_cancel: reason,
-                    signature: signature,
-                };
-                return [2 /*return*/, this._request(endpoints.CANCEL_TRANSACTION, payload)];
-            });
-        });
-    };
     Faspay.prototype._request = function (url, body) {
         return __awaiter(this, void 0, void 0, function () {
-            var _url, response, data, err_1;
+            var _url, response, data;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        _a.trys.push([0, 3, , 4]);
-                        _url = this.config.baseUrl + url;
+                        _url = this.baseUrl + url;
                         return [4 /*yield*/, (0, node_fetch_1.default)(_url, {
                                 method: "POST",
                                 body: JSON.stringify(body),
@@ -163,14 +66,9 @@ var Faspay = /** @class */ (function () {
                     case 2:
                         data = (_a.sent());
                         if (data.response_code !== faspay_1.ResponseCode.Success) {
-                            throw new Error(data.response_desc);
+                            throw new error_1.default(data);
                         }
                         return [2 /*return*/, data];
-                    case 3:
-                        err_1 = _a.sent();
-                        console.error(err_1);
-                        throw new Error("Payment gateway error!");
-                    case 4: return [2 /*return*/];
                 }
             });
         });

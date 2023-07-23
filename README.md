@@ -20,52 +20,28 @@ or yarn
 $ yarn add faspay
 ```
 
-## Usage
-
-First, import the Faspay class.
-
-```ts
-import Faspay from "faspay";
-```
-
-or if you are still using commonjs type module, do this instead:
-
-```js
-const { Faspay } = require("faspay");
-```
-
-and then create an instance of the object using your Faspay credentials
-
-```ts
-const faspay = new Faspay({
-  baseUrl: "https://debit-sandbox.faspay.co.id",
-  merchantId: "00000",
-  merchant: "Test Faspay Integration",
-  userId: "bot000000",
-  password: "",
-  creditAccount: "faspay_trial",
-  creditPassword: "",
-});
-```
-
-During the development or testing phase of the API, configure the baseUrl as https://debit-sandbox.faspay.co.id.
-
-However, when moving to a production environment, set it to https://web.faspay.co.id.
-
 ## Example
 
 ```ts
-import Faspay, { CreateTransactionData, PaymentStatusCode } from "faspay";
+import {
+  FaspayDebit,
+  FaspayConfig,
+  CreateTransactionData,
+  PaymentStatusCode,
+  InstallmentTenor,
+} from "faspay";
 
-const faspay = new Faspay({
-  baseUrl: "https://debit-sandbox.faspay.co.id",
+const config: FaspayConfig = {
+  isProduction: false,
   merchantId: "00000",
   merchant: "Test Faspay Integration",
   userId: "bot000000",
   password: "",
   creditAccount: "faspay_trial",
   creditPassword: "",
-});
+};
+
+const faspay = new FaspayDebit(config);
 
 const main = async () => {
   // Get payment channel
@@ -77,16 +53,39 @@ const main = async () => {
     billNo: Date.now().toString(),
     description: "Test faspay payment",
     paymentChannel: "800",
-    custId: "3d966130-ad7e-4482-83a9-36e4cd676393",
-    custName: "test customer",
-    custPhone: "0896959239123",
-    custEmail: "cust@mail.com",
+    customer: {
+      no: "3d966130-ad7e-4482-83a9-36e4cd676393",
+      name: "test customer",
+      phone: "896959239123",
+      email: "cust@mail.com",
+    },
+    billing: {
+      // optional (required for OVO)
+      name: "John Doe",
+      address: "Jl Sabang 37",
+      city: "Jakarta",
+      region: "DKI Jakarta",
+      state: "Indonesia",
+      postCode: "10170",
+      countryCode: "ID",
+    },
+    shipping: {
+      // optional (required for OVO)
+      name: "John Doe",
+      address: "Jl Sabang 37",
+      city: "Jakarta",
+      region: "DKI Jakarta",
+      state: "Indonesia",
+      postCode: "10170",
+      countryCode: "ID",
+    },
     items: [
       {
         id: "29d42612-213c-4c8f-83f2-916e19b6932b",
         product: "Test Product",
         price: 100000,
         qty: 1,
+        tenor: InstallmentTenor.FullPayment, // optional
       },
     ],
   };
@@ -101,8 +100,7 @@ const main = async () => {
 
   switch (paymentStatus.payment_status_code) {
     case PaymentStatusCode.Unprocessed:
-    case PaymentStatusCode.InProcess:
-      console.log("Payment status: In Process");
+      console.log("Payment status: Not Processed");
       break;
     case PaymentStatusCode.Success:
       console.log("Payment status: Success");
@@ -130,7 +128,11 @@ main();
 ## Features
 
 - [x] Get Payment Channel
-- [x] Create Debit Transaction
+- [x] Create Debit VA Transaction
+- [x] Create Debit E-Wallet Transaction
+- [x] Create Debit Retail Transaction
+- [x] Create Online Debit Transaction
+- [ ] Create ShopeePay QRIS Transaction
 - [ ] Create Credit Transaction
 - [x] Cancel Transaction
 - [x] Check Transaction Status
