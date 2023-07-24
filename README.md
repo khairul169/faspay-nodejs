@@ -132,7 +132,7 @@ main();
 - [x] Create Debit E-Wallet Transaction
 - [x] Create Debit Retail Transaction
 - [x] Create Online Debit Transaction
-- [ ] Create ShopeePay QRIS Transaction
+- [x] Create ShopeePay QRIS Transaction
 - [ ] Create Credit Transaction
 - [x] Cancel Transaction
 - [x] Check Transaction Status

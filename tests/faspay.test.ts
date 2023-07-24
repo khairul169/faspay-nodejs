@@ -69,6 +69,25 @@ describe("Faspay test", () => {
 
   it("list available payment gateway", async () => {
     const result = await faspay.getPaymentChannel();
+    // console.log(result);
+    /*
+    { pg_code: '707', pg_name: 'ALFAGROUP' },
+    { pg_code: '702', pg_name: 'BCA Virtual Account' },
+    { pg_code: '801', pg_name: 'BNI Virtual Account' },
+    { pg_code: '401', pg_name: 'BRI E-PAY' },
+    { pg_code: '800', pg_name: 'BRI Virtual Account' },
+    { pg_code: '700', pg_name: 'CIMB Clicks' },
+    { pg_code: '819', pg_name: 'DANA' },
+    { pg_code: '701', pg_name: 'DANAMON ONLINE BANKING' },
+    { pg_code: '708', pg_name: 'Danamon VA' },
+    { pg_code: '302', pg_name: 'LinkAja' },
+    { pg_code: '802', pg_name: 'Mandiri Virtual Account' },
+    { pg_code: '408', pg_name: 'Maybank Virtual Account' },
+    { pg_code: '812', pg_name: 'OVO' },
+    { pg_code: '706', pg_name: 'Payment Point Indomaret' },
+    { pg_code: '402', pg_name: 'Permata' },
+    { pg_code: '711', pg_name: 'ShopeePay QRIS' }
+    */
     expect(result.payment_channel).is.not.empty;
   });
 
@@ -131,13 +150,27 @@ describe("Faspay test", () => {
     expect(result.redirect_url).is.not.empty;
   });
 
-  // broken
-  it.skip("create ShopeePay QRIS transaction", async () => {
+  it("create OVO e-wallet transaction", async () => {
+    const result = await faspay.createTransaction({
+      ...transactionSample,
+      paymentChannel: "812",
+    });
+    expect(result.redirect_url).is.not.empty;
+  });
+
+  it("create DANA e-wallet transaction", async () => {
+    const result = await faspay.createTransaction({
+      ...transactionSample,
+      paymentChannel: "819",
+    });
+    expect(result.redirect_url).is.not.empty;
+  });
+
+  it("create ShopeePay QRIS transaction", async () => {
     const result = await faspay.createTransaction({
       ...transactionSample,
       paymentChannel: "711",
     });
-    console.log(result);
     expect(result.redirect_url).is.not.empty;
   });
 });
