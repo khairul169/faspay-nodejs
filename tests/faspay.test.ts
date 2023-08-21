@@ -6,8 +6,10 @@ import {
   PaymentType,
 } from "../types/debit";
 import FaspayDebit from "../src/debit";
+import FaspayCredit from "../src/credit";
 import FaspayError from "../src/error";
 import { FaspayConfig } from "../types/faspay";
+import { CreateCreditTxData } from "../types/credit";
 
 describe("Faspay test", () => {
   let trxId: string;
@@ -24,6 +26,7 @@ describe("Faspay test", () => {
   };
 
   const faspay = new FaspayDebit(config);
+  const credit = new FaspayCredit(config);
 
   const transactionSample: CreateTransactionData = {
     billNo: Date.now().toString(),
@@ -37,7 +40,6 @@ describe("Faspay test", () => {
       email: "cust@mail.com",
     },
     billing: {
-      // optional (required for OVO)
       name: "John Doe",
       address: "Jl Sabang 37",
       city: "Jakarta",
@@ -47,7 +49,6 @@ describe("Faspay test", () => {
       countryCode: "ID",
     },
     shipping: {
-      // optional (required for OVO)
       name: "John Doe",
       address: "Jl Sabang 37",
       city: "Jakarta",
@@ -172,5 +173,17 @@ describe("Faspay test", () => {
       paymentChannel: "711",
     });
     expect(result.redirect_url).is.not.empty;
+  });
+
+  it.only("create credit card transaction", async () => {
+    const payload = {
+      ...transactionSample,
+      customer: { ...transactionSample.customer, ipAddress: "127.0.0.1" },
+      shipping: { ...transactionSample.shipping, cost: 0 },
+    } as CreateCreditTxData;
+
+    const result = await credit.createTransaction(payload);
+    console.log(result);
+    // expect(result.redirect_url).is.not.empty;
   });
 });

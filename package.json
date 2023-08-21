@@ -11,7 +11,11 @@
     "test": "mocha -r ts-node/register -r dotenv/config \"tests/**/*.test.ts\"",
     "build": "rm -rf dist && tsc"
   },
-  "keywords": ["faspay", "faspay.co.id", "fastpay nodejs"],
+  "keywords": [
+    "faspay",
+    "faspay.co.id",
+    "fastpay nodejs"
+  ],
   "author": "Khairul Hidayat",
   "license": "MIT",
   "repository": {
@@ -20,6 +24,7 @@
   },
   "dependencies": {
     "dayjs": "^1.11.9",
+    "form-data": "^4.0.0",
     "node-fetch": "^2.6"
   },
   "devDependencies": {

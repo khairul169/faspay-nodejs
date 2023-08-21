@@ -96,6 +96,7 @@ export type CreateTransactionResponse = FaspayResponse & {
 };
 
 export type TransactionCustomer = {
+  ipAddress?: string;
   no: string;
   name: string;
   phone: string;
@@ -115,13 +116,13 @@ export type TransactionItem = {
 export type TransactionBilling = {
   name: string;
   lastName?: string;
-  address?: string;
-  city?: string;
-  region?: string;
-  state?: string;
-  postCode?: string;
+  address: string;
+  city: string;
+  region: string;
+  state: string;
+  postCode: string;
   msisdn?: string;
-  countryCode?: string;
+  countryCode: string;
 };
 
 export type TransactionShipping = TransactionBilling;

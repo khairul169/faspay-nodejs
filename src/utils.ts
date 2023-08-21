@@ -13,6 +13,14 @@ export function generateSignature(...data: string[]) {
   return hash("sha1", hash("md5", payload));
 }
 
+export function signature2(...data: string[]) {
+  return hash("sha1", "##" + data.join("##").toUpperCase() + "##");
+}
+
 export function idr(num: number) {
   return (Math.round(num) * 100).toString();
+}
+
+export function idr2(num: number) {
+  return num.toFixed(2);
 }

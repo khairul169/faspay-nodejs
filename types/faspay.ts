@@ -4,8 +4,8 @@ export type FaspayConfig = {
   merchant: string;
   userId: string;
   password: string;
-  creditAccount?: string;
-  creditPassword?: string;
+  creditAccount: string;
+  creditPassword: string;
 };
 
 export type FaspayRequest = {
