@@ -130,6 +130,8 @@ export type CreateTransactionData = {
 export type InquiryPaymentStatusRequest = FaspayRequest & {
     trx_id: string;
     bill_no: string;
+    payment_status_code: string;
+    payment_status_desc: string;
 };
 export type InquiryPaymentStatusResponse = FaspayResponse & {
     trx_id: string;

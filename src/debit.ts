@@ -137,6 +137,8 @@ class FaspayDebit extends Faspay {
       trx_id: trxId,
       bill_no: billNo,
       signature,
+      payment_status_code: "2",
+      payment_status_desc: "Payment Success"
     };
 
     return this._request<InquiryPaymentStatusResponse>(
