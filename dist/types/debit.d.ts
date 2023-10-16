@@ -84,6 +84,8 @@ export type CreateTransactionResponse = FaspayResponse & {
     bill_no: string;
     bill_items: CreateTransactionItemData[];
     redirect_url: string;
+    web_url?: string;
+    qr_content?: string;
 };
 export type TransactionCustomer = {
     no: string;
