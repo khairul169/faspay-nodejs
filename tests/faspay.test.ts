@@ -166,11 +166,13 @@ describe("Faspay test", () => {
     expect(result.redirect_url).is.not.empty;
   });
 
-  it("create ShopeePay QRIS transaction", async () => {
+  it("create LinkAja QRIS transaction", async () => {
     const result = await faspay.createTransaction({
       ...transactionSample,
-      paymentChannel: "711",
+      paymentChannel: "715",
     });
     expect(result.redirect_url).is.not.empty;
+    expect(result.web_url).is.not.empty;
+    expect(result.qr_content).is.not.empty;
   });
 });
